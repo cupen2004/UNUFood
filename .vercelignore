@@ -4,7 +4,5 @@ node_modules
 .env.local
 *.md
 !README.md
-start-dev.bat
-start-dev.sh
 .gitignore
 .gitattributes
