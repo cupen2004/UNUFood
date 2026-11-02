@@ -1,0 +1,149 @@
+/* UNUFood Design System - Warm Alabaster, Campus Green & Terracotta Receipt Aesthetic */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg-warm: #FAF7F2;
+  --bg-card: #FFFFFF;
+  --campus-green: #163828;
+  --campus-green-light: #23543D;
+  --campus-green-subtle: #EBF3EE;
+  --chili-terracotta: #D94E34;
+  --chili-subtle: #FDF1EE;
+  --turmeric: #D97706;
+  --turmeric-subtle: #FEF3C7;
+  --text-main: #18181B;
+  --text-muted: #57534E;
+  --border-line: #E7E5E4;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-warm);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+/* Editorial receipt perforation cutouts */
+.ticket-receipt {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid var(--border-line);
+}
+
+.ticket-receipt::before,
+.ticket-receipt::after {
+  content: '';
+  position: absolute;
+  top: 68%;
+  width: 18px;
+  height: 18px;
+  background-color: var(--bg-warm);
+  border-radius: 50%;
+  border: 1px solid var(--border-line);
+  z-index: 10;
+}
+
+.ticket-receipt::before {
+  left: -10px;
+  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+
+.ticket-receipt::after {
+  right: -10px;
+  clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+}
+
+.dashed-divider {
+  border: none;
+  border-top: 1.5px dashed #D6D3D1;
+  margin: 1rem 0;
+}
+
+/* Subtle receipt jagged bottom edge for digital receipts */
+.sawtooth-bottom {
+  background: radial-gradient(circle, transparent, transparent 50%, #FAF7F2 50%, #FAF7F2 100%) -7px -8px / 16px 16px repeat-x;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #D6D3D1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A8A29E;
+}
+
+/* Custom pulse animations for countdown alert */
+@keyframes warm-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.animate-warm-pulse {
+  animation: warm-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* High-fidelity CSS retail barcode styling */
+.barcode-lines {
+  height: 44px;
+  width: 100%;
+  max-width: 260px;
+  background: repeating-linear-gradient(
+    90deg,
+    #18181B 0px,
+    #18181B 2px,
+    transparent 2px,
+    transparent 4px,
+    #18181B 4px,
+    #18181B 7px,
+    transparent 7px,
+    transparent 10px,
+    #18181B 10px,
+    #18181B 12px,
+    transparent 12px,
+    transparent 14px,
+    #18181B 14px,
+    #18181B 18px,
+    transparent 18px,
+    transparent 21px,
+    #18181B 21px,
+    #18181B 25px,
+    transparent 25px,
+    transparent 27px
+  );
+}
+
+/* Print Styles for Packaging Labels */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  #print-area, #print-area * {
+    visibility: visible !important;
+  }
+  #print-area {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    background: white !important;
+    padding: 10px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
