@@ -16,7 +16,7 @@ npm install -g vercel
 ```bash
 git add .
 git commit -m "Prepare for Vercel deployment"
-git push origin main
+git push origin master
 ```
 
 ### B. Import Project di Vercel
@@ -29,23 +29,15 @@ git push origin main
 Vercel akan otomatis mendeteksi sebagai static site. Pastikan:
 - **Framework Preset**: Other
 - **Root Directory**: `./` (default)
-- **Build Command**: (kosongkan atau `echo 'Static site'`)
+- **Build Command**: (kosongkan - akan otomatis dari vercel.json)
 - **Output Directory**: `public`
 
-### D. Setup Environment Variables
-Sebelum deploy, tambahkan environment variables:
+> ✅ **File `vercel.json` sudah dikonfigurasi otomatis**, Vercel akan menggunakan settingan ini.
 
-1. Di halaman konfigurasi project, scroll ke **"Environment Variables"**
-2. Tambahkan variabel berikut:
+### D. Klik Deploy
+Karena Supabase credentials sudah ada di file HTML (anon key aman untuk public), Anda bisa langsung klik **"Deploy"** tanpa setup environment variables tambahan.
 
-```
-SUPABASE_URL = https://xxxxx.supabase.co
-SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
-
-> ⚠️ **Penting**: Dapatkan nilai ini dari [Supabase Dashboard](https://supabase.com/dashboard) → Your Project → Settings → API
-
-3. Klik **"Deploy"**
+> 💡 **Catatan**: Supabase anon key aman untuk digunakan di client-side karena dilindungi oleh Row Level Security (RLS).
 
 ## Langkah 3: Deploy via Vercel CLI (Alternatif)
 
@@ -81,16 +73,24 @@ vercel --prod
 
 ## Langkah 5: Update Supabase Settings
 
-Setelah deploy, update Supabase configuration:
+Setelah deploy berhasil, update Supabase configuration untuk Google OAuth:
 
 1. Buka [Supabase Dashboard](https://supabase.com/dashboard)
 2. Pilih project Anda
 3. Pergi ke **Authentication** → **URL Configuration**
-4. Tambahkan Vercel URL ke **Site URL** dan **Redirect URLs**:
+4. Update **Site URL** dengan URL Vercel Anda:
    ```
-   https://unufood.vercel.app
-   https://unufood.vercel.app/**
+   https://your-project-name.vercel.app
    ```
+5. Tambahkan ke **Redirect URLs**:
+   ```
+   https://your-project-name.vercel.app
+   https://your-project-name.vercel.app/**
+   http://localhost:8000
+   http://localhost:8000/**
+   ```
+
+> 💡 Ganti `your-project-name` dengan nama project Vercel Anda yang sebenarnya.
 
 ## Verifikasi Deployment
 

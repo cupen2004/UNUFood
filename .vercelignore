@@ -1,0 +1,11 @@
+node_modules
+.git
+.env
+.env.local
+*.md
+!README.md
+src/
+start-dev.bat
+start-dev.sh
+.gitignore
+.gitattributes
