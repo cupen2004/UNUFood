@@ -31,7 +31,7 @@ class UNUFoodApp {
         // Check if user is partner/admin, redirect to admin dashboard
         if (user.role === 'partner' || user.role === 'admin') {
           console.log('Partner/Admin detected, redirecting to dashboard...');
-          window.location.href = '/public/admin.html';
+          window.location.href = '/admin.html';
           return;
         }
 

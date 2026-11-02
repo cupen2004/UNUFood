@@ -57,11 +57,11 @@ class PartnerDashboardApp {
         // } else {
         //   // Redirect to customer app
         //   console.warn('User is not partner/admin, redirecting...');
-        //   window.location.href = '/public/index-complete.html';
+        //   window.location.href = '/index-complete.html';
         // }
       } else {
         // Redirect to login
-        window.location.href = '/public/index-complete.html';
+        window.location.href = '/index-complete.html';
       }
     });
 
@@ -120,7 +120,7 @@ class PartnerDashboardApp {
         if (confirm('Yakin ingin keluar?')) {
           try {
             await authManager.signOut();
-            window.location.href = '/public/index.html';
+            window.location.href = '/index.html';
           } catch (error) {
             console.error('Sign out error:', error);
           }

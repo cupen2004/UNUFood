@@ -62,20 +62,20 @@
         if (error) {
           console.error('Auth error:', error);
           alert('Login gagal: ' + error.message);
-          window.location.href = '/public/';
+          window.location.href = '/';
           return;
         }
 
         if (data.session) {
           // Redirect to main app
-          window.location.href = '/public/';
+          window.location.href = '/';
         } else {
           // No session, redirect to login
-          window.location.href = '/public/';
+          window.location.href = '/';
         }
       } catch (err) {
         console.error('Unexpected error:', err);
-        window.location.href = '/public/';
+        window.location.href = '/';
       }
     })();
   </script>
