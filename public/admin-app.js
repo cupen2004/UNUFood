@@ -350,16 +350,16 @@ class PartnerDashboardApp {
       const count = facultyCounts[f.id] || 0;
       rowsHtml += `
         <tr class="border-b border-stone-200 hover:bg-stone-50">
-          <td class="py-3 px-4 text-xs font-semibold text-stone-900">
+          <td class="py-3 px-3 sm:px-4 text-xs font-semibold text-stone-900">
             <span class="mr-1.5">${f.icon}</span> ${f.name}
           </td>
-          <td class="py-3 px-4 text-xs text-stone-600">${f.point}</td>
-          <td class="py-3 px-4 text-center">
+          <td class="py-3 px-3 sm:px-4 text-xs text-stone-600">${f.point}</td>
+          <td class="py-3 px-3 sm:px-4 text-center">
             <span class="inline-block px-2.5 py-1 rounded bg-[#EBF3EE] text-[#163828] font-mono font-bold text-xs">
               ${count} Box
             </span>
           </td>
-          <td class="py-3 px-4 text-xs font-mono text-stone-600 text-right">
+          <td class="py-3 px-3 sm:px-4 text-xs font-mono text-stone-600 text-right">
             ${formatRp(count * 18000)}
           </td>
         </tr>
@@ -406,14 +406,14 @@ class PartnerDashboardApp {
           <div class="p-4 border-b border-stone-200 bg-stone-50/50">
             <h4 class="text-sm font-bold text-stone-900">Distribusi Porsi per Fakultas</h4>
           </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+          <div class="overflow-x-auto -mx-4 sm:mx-0">
+            <table class="min-w-full text-left border-collapse">
               <thead>
-                <tr class="bg-stone-100 text-stone-600 text-[11px] uppercase font-semibold border-b border-stone-200">
-                  <th class="py-2.5 px-4">Gedung / Fakultas</th>
-                  <th class="py-2.5 px-4">Lokasi Drop-Off</th>
-                  <th class="py-2.5 px-4 text-center">Jumlah Box</th>
-                  <th class="py-2.5 px-4 text-right">Nilai Pesanan</th>
+                <tr class="bg-stone-100 text-stone-600 text-[10px] sm:text-[11px] uppercase font-semibold border-b border-stone-200">
+                  <th class="py-2.5 px-3 sm:px-4 whitespace-nowrap">Gedung / Fakultas</th>
+                  <th class="py-2.5 px-3 sm:px-4 whitespace-nowrap">Lokasi Drop-Off</th>
+                  <th class="py-2.5 px-3 sm:px-4 text-center whitespace-nowrap">Jumlah Box</th>
+                  <th class="py-2.5 px-3 sm:px-4 text-right whitespace-nowrap">Nilai Pesanan</th>
                 </tr>
               </thead>
               <tbody>
@@ -421,9 +421,9 @@ class PartnerDashboardApp {
               </tbody>
               <tfoot>
                 <tr class="bg-stone-50 font-bold border-t border-stone-200 text-xs">
-                  <td class="py-3 px-4 text-stone-900" colspan="2">TOTAL KESELURUHAN</td>
-                  <td class="py-3 px-4 text-center font-mono text-[#163828] text-sm">${totalPortions} Box</td>
-                  <td class="py-3 px-4 text-right font-mono text-[#D94E34] text-sm">${formatRp(totalPortions * 18000)}</td>
+                  <td class="py-3 px-3 sm:px-4 text-stone-900" colspan="2">TOTAL KESELURUHAN</td>
+                  <td class="py-3 px-3 sm:px-4 text-center font-mono text-[#163828] text-sm">${totalPortions} Box</td>
+                  <td class="py-3 px-3 sm:px-4 text-right font-mono text-[#D94E34] text-sm">${formatRp(totalPortions * 18000)}</td>
                 </tr>
               </tfoot>
             </table>
@@ -443,19 +443,19 @@ class PartnerDashboardApp {
     );
 
     const menusHtml = state.menus.map(menu => `
-      <div class="bg-white border border-stone-200 rounded-lg p-4 hover:border-[#163828] transition ${!menu.isAvailable ? 'opacity-60 bg-stone-50' : ''}">
-        <div class="flex gap-4">
-          <img src="${menu.image}" alt="${menu.name}" class="w-24 h-24 rounded-lg object-cover ${!menu.isAvailable ? 'grayscale' : ''}" />
-          <div class="flex-1">
+      <div class="bg-white border border-stone-200 rounded-lg p-3 sm:p-4 hover:border-[#163828] transition ${!menu.isAvailable ? 'opacity-60 bg-stone-50' : ''}">
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <img src="${menu.image}" alt="${menu.name}" class="w-full sm:w-24 h-48 sm:h-24 rounded-lg object-cover ${!menu.isAvailable ? 'grayscale' : ''}" />
+          <div class="flex-1 min-w-0">
             <div class="flex justify-between items-start mb-2">
-              <div>
-                <div class="flex items-center gap-2">
-                  <h4 class="font-bold text-sm text-stone-900">${menu.name}</h4>
-                  ${!menu.isAvailable ? '<span class="text-[9px] px-1.5 py-0.5 bg-stone-300 text-stone-700 rounded font-bold uppercase">Nonaktif</span>' : ''}
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <h4 class="font-bold text-sm text-stone-900 truncate">${menu.name}</h4>
+                  ${!menu.isAvailable ? '<span class="text-[9px] px-1.5 py-0.5 bg-stone-300 text-stone-700 rounded font-bold uppercase flex-shrink-0">Nonaktif</span>' : ''}
                 </div>
                 <p class="text-xs text-stone-500">${menu.partnerName}</p>
               </div>
-              <div class="flex gap-2">
+              <div class="flex flex-wrap gap-2">
                 <button onclick="app.editMenu('${menu.id}')" class="px-3 py-1 bg-[#163828] text-white rounded text-xs font-semibold hover:bg-[#23543D]">
                   Edit
                 </button>
@@ -470,23 +470,23 @@ class PartnerDashboardApp {
                 </button>
               </div>
             </div>
-            <p class="text-xs text-stone-600 mb-2">${menu.description}</p>
-            <div class="flex gap-4 text-xs">
+            <p class="text-xs text-stone-600 mb-2 line-clamp-2">${menu.description}</p>
+            <div class="grid grid-cols-2 sm:flex sm:gap-4 gap-2 text-xs">
               <div>
                 <span class="text-stone-500">Harga:</span>
-                <span class="font-mono font-bold text-[#D94E34]">${formatRp(menu.price)}</span>
+                <span class="font-mono font-bold text-[#D94E34] block sm:inline">${formatRp(menu.price)}</span>
               </div>
               <div>
                 <span class="text-stone-500">Kuota:</span>
-                <span class="font-mono font-bold">${menu.maxQuota} porsi</span>
+                <span class="font-mono font-bold block sm:inline">${menu.maxQuota} porsi</span>
               </div>
               <div>
                 <span class="text-stone-500">Terjual:</span>
-                <span class="font-mono font-bold text-emerald-600">${menu.orderedCount} porsi</span>
+                <span class="font-mono font-bold text-emerald-600 block sm:inline">${menu.orderedCount} porsi</span>
               </div>
               <div>
                 <span class="text-stone-500">Sisa:</span>
-                <span class="font-mono font-bold text-amber-600">${menu.maxQuota - menu.orderedCount} porsi</span>
+                <span class="font-mono font-bold text-amber-600 block sm:inline">${menu.maxQuota - menu.orderedCount} porsi</span>
               </div>
             </div>
           </div>
@@ -743,13 +743,13 @@ class PartnerDashboardApp {
           <div class="p-4 border-b border-stone-200 bg-stone-50/50">
             <h4 class="text-sm font-bold text-stone-900">Penjualan per Menu</h4>
           </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+          <div class="overflow-x-auto -mx-4 sm:mx-0">
+            <table class="min-w-full text-left border-collapse">
               <thead>
-                <tr class="bg-stone-100 text-stone-600 text-[11px] uppercase font-semibold border-b border-stone-200">
-                  <th class="py-2.5 px-4">Nama Menu</th>
-                  <th class="py-2.5 px-4 text-center">Terjual</th>
-                  <th class="py-2.5 px-4 text-right">Revenue</th>
+                <tr class="bg-stone-100 text-stone-600 text-[10px] sm:text-[11px] uppercase font-semibold border-b border-stone-200">
+                  <th class="py-2.5 px-3 sm:px-4 whitespace-nowrap">Nama Menu</th>
+                  <th class="py-2.5 px-3 sm:px-4 text-center whitespace-nowrap">Terjual</th>
+                  <th class="py-2.5 px-3 sm:px-4 text-right whitespace-nowrap">Revenue</th>
                 </tr>
               </thead>
               <tbody>
@@ -757,9 +757,9 @@ class PartnerDashboardApp {
               </tbody>
               <tfoot>
                 <tr class="bg-stone-50 font-bold border-t-2 border-stone-200 text-xs">
-                  <td class="py-3 px-4 text-stone-900">TOTAL</td>
-                  <td class="py-3 px-4 text-center font-mono text-[#163828]">${totalPortions} porsi</td>
-                  <td class="py-3 px-4 text-right font-mono text-[#163828]">${formatRp(totalGross)}</td>
+                  <td class="py-3 px-3 sm:px-4 text-stone-900">TOTAL</td>
+                  <td class="py-3 px-3 sm:px-4 text-center font-mono text-[#163828]">${totalPortions} porsi</td>
+                  <td class="py-3 px-3 sm:px-4 text-right font-mono text-[#163828]">${formatRp(totalGross)}</td>
                 </tr>
               </tfoot>
             </table>
