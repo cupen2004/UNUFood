@@ -1,0 +1,27 @@
+{
+  "name": "unufood",
+  "version": "2.0.0",
+  "description": "Platform Pre-Order Makan Siang Kampus & Pemberdayaan UMKM",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "start": "python -m http.server 8000"
+  },
+  "keywords": [
+    "food-ordering",
+    "campus",
+    "umkm",
+    "pre-order",
+    "supabase"
+  ],
+  "author": "UNU Campus Team",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/unufood.git"
+  }
+}

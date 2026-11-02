@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNUFood — Platform Pre-Order Makan Siang Kampus</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            campus: { green: '#163828', light: '#23543D', subtle: '#EBF3EE' },
+            culinary: { terracotta: '#D94E34', subtle: '#FDF1EE' },
+            surface: { alabaster: '#FAF7F2', card: '#FFFFFF' }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    window.ENV = {
+      SUPABASE_URL: 'https://qdgbjjtichoirqiqqngv.supabase.co',
+      SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2JqanRpY2hvaXJxaXFxbmd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM0MjY0NjgsImV4cCI6MjEwOTAwMjQ2OH0.4kbKBz--cvlCcRJQx_TfQltrtgFlJEVsbcm1ESDKqpI'
+    };
+  </script>
+</head>
+<body class="min-h-full flex flex-col bg-[#FAF7F2] text-[#18181B] antialiased">
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm hidden">
+    <div class="relative bg-white rounded-lg shadow-2xl max-w-md w-full border border-stone-300 p-6 sm:p-8">
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-[#163828] text-white flex items-center justify-center rounded-lg font-mono font-extrabold text-2xl mx-auto mb-4 shadow-xs">UF</div>
+        <h2 class="text-2xl font-bold text-stone-900 mb-2">Selamat Datang di UNUFood</h2>
+        <p class="text-sm text-stone-600">Silakan masuk untuk memesan makan siang kampus</p>
+      </div>
+
+      <button id="btn-google-signin" class="w-full py-3 px-4 bg-white hover:bg-stone-50 border-2 border-stone-300 hover:border-[#163828] rounded-lg font-semibold text-sm text-stone-800 transition flex items-center justify-center space-x-3 shadow-xs mb-4">
+        <svg class="w-5 h-5" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        <span>Masuk dengan Google</span>
+      </button>
+
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-stone-300"></div></div>
+        <div class="relative flex justify-center text-xs"><span class="bg-white px-3 text-stone-500 font-medium">atau masuk dengan email</span></div>
+      </div>
+
+      <form id="form-email-signin" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Email Kampus</label>
+          <input type="email" id="input-signin-email" required placeholder="nama@student.unu.ac.id" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm text-stone-900 focus:outline-none focus:border-[#163828]" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Password</label>
+          <input type="password" id="input-signin-password" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm text-stone-900 focus:outline-none focus:border-[#163828]" />
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-[#163828] hover:bg-[#23543D] text-white rounded text-sm font-semibold transition shadow-xs">Masuk</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="main-app" class="hidden min-h-screen flex flex-col">
+    <header class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E7E5E4]">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center justify-between h-16 gap-2 sm:gap-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 bg-[#163828] text-white flex items-center justify-center rounded font-mono font-extrabold text-lg tracking-tighter shadow-xs">UF</div>
+            <div>
+              <div class="flex items-center space-x-1.5">
+                <span class="font-extrabold text-base tracking-tight text-[#163828]">UNUFood</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#EBF3EE] text-[#163828] font-bold border border-[#163828]/20">KAMPUS</span>
+              </div>
+              <p class="text-[10px] text-stone-500 hidden sm:block">Pre-Order Makan Siang & Pemberdayaan UMKM</p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-2 sm:space-x-3">
+            <button id="btn-open-profile" class="p-1.5 sm:px-2.5 sm:py-1 rounded bg-white border border-stone-300 hover:border-stone-400 text-stone-800 text-xs font-medium flex items-center space-x-1.5 shadow-2xs transition">
+              <div id="user-avatar" class="w-5 h-5 rounded-full bg-stone-200 text-stone-700 flex items-center justify-center text-[10px] font-bold">?</div>
+              <span id="nav-user-name" class="hidden sm:inline font-semibold">User</span>
+            </button>
+            <button id="btn-open-cart" class="relative p-2 rounded bg-[#163828] text-white hover:bg-[#23543D] transition shadow-xs">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              <span id="cart-badge-count" class="absolute -top-1.5 -right-1.5 bg-[#D94E34] text-white text-[10px] font-mono font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+            </button>
+            <button id="btn-signout" class="p-2 rounded bg-stone-100 text-stone-600 hover:bg-stone-200 transition text-xs" title="Sign Out">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="customer-view-container" class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div id="customer-live-banner" class="mb-6"></div>
+      <div id="active-ticket-section" class="hidden"></div>
+      <div>
+        <div class="pb-3 border-b border-stone-200 mb-6">
+          <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight text-stone-900">Katalog Menu Hari Ini</h2>
+          <p class="text-xs text-stone-600 mt-1">Menu terkurasi membantu mitra UMKM merencanakan dengan presisi.</p>
+        </div>
+        <div id="daily-menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </div>
+    </main>
+
+    <footer class="mt-auto border-t border-stone-300 bg-[#FAF7F2] py-6 text-stone-600 text-xs">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+        <p class="font-bold text-stone-800">UNUFood — Gerakan Makan Siang Sehat & Ekosistem UMKM Berdaya</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cart-backdrop" class="fixed inset-0 bg-stone-900/40 backdrop-blur-2xs z-50 hidden opacity-0 transition-opacity duration-300"></div>
+  <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[420px] bg-white shadow-2xl z-50 translate-x-full transition-transform duration-300 flex flex-col border-l border-stone-200">
+    <div class="p-4 sm:p-5 border-b border-stone-200 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="w-7 h-7 bg-[#163828] text-white rounded flex items-center justify-center font-bold text-xs">🧺</div>
+        <h3 class="text-base font-bold text-stone-900">Pesanan Makan Siang</h3>
+      </div>
+      <button id="btn-close-cart" class="text-stone-400 hover:text-stone-700 p-1.5 text-lg">✕</button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+      <div id="cart-empty-state" class="text-center py-12 text-stone-400 text-xs hidden">
+        <svg class="w-12 h-12 mx-auto text-stone-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <p class="font-semibold text-stone-600">Keranjang Masih Kosong</p>
+      </div>
+      <div id="cart-items-container" class="space-y-3"></div>
+      <div id="cart-dropoff-selection" class="pt-3 border-t border-stone-200">
+        <label class="block text-xs font-bold text-stone-800 mb-1">Titik Pengambilan</label>
+        <select id="cart-select-dropoff" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-xs text-stone-900 focus:outline-none focus:border-[#163828]"></select>
+      </div>
+    </div>
+    <div id="cart-footer-details" class="p-4 sm:p-5 border-t border-stone-200 bg-[#FAF7F2] space-y-3">
+      <div class="space-y-1.5 text-xs">
+        <div class="flex justify-between text-stone-600">
+          <span>Subtotal:</span>
+          <span id="cart-subtotal" class="font-mono font-semibold">Rp 0</span>
+        </div>
+        <div class="flex justify-between text-stone-600">
+          <span>Biaya Layanan:</span>
+          <span id="cart-service-fee" class="font-mono font-semibold">Rp 1.000</span>
+        </div>
+        <div class="dashed-divider"></div>
+        <div class="flex justify-between text-sm font-extrabold text-stone-900">
+          <span>Total:</span>
+          <span id="cart-total" class="font-mono text-[#D94E34]">Rp 0</span>
+        </div>
+      </div>
+      <button id="btn-checkout-now" class="w-full py-3 bg-[#163828] hover:bg-[#23543D] text-white rounded font-semibold text-xs transition shadow-xs">Lanjut ke Pembayaran</button>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div id="checkout-backdrop" class="fixed inset-0 bg-stone-900/50 backdrop-blur-2xs"></div>
+    <div class="relative bg-white rounded-lg shadow-2xl max-w-md w-full border border-stone-300 p-5 sm:p-6 z-10 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-stone-200">
+        <div class="flex items-center space-x-2">
+          <span class="w-6 h-6 rounded bg-[#163828] text-white flex items-center justify-center text-xs font-bold">💳</span>
+          <h3 class="text-base font-bold text-stone-900">Pembayaran Digital</h3>
+        </div>
+        <button id="btn-close-checkout" class="text-stone-400 hover:text-stone-700 text-lg">✕</button>
+      </div>
+      <div id="checkout-order-summary" class="my-4"></div>
+      <div class="mb-4">
+        <label class="block text-xs font-bold text-stone-800 mb-2">Metode Pembayaran:</label>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <label class="flex items-center space-x-2 p-2.5 rounded border border-[#163828] bg-[#EBF3EE] cursor-pointer">
+            <input type="radio" name="pay-method" value="qris" checked />
+            <span class="font-bold text-[#163828]">QRIS</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2.5 rounded border border-stone-200 bg-stone-50 cursor-pointer">
+            <input type="radio" name="pay-method" value="gopay" />
+            <span class="font-semibold text-stone-700">E-Wallet</span>
+          </label>
+        </div>
+      </div>
+      <div id="checkout-payment-display" class="bg-[#FAF7F2] p-4 rounded-lg border border-stone-200 text-center mb-4"></div>
+      <button id="btn-simulate-payment" class="w-full py-3 bg-[#163828] hover:bg-[#23543D] text-white rounded font-semibold text-xs transition shadow-xs">Saya Sudah Membayar</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 bg-[#163828] text-white px-4 py-3 rounded-lg shadow-xl border border-stone-700 flex items-center space-x-3 text-xs max-w-sm">
+    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+    <span id="toast-message" class="font-medium">Pemberitahuan</span>
+  </div>
+
+  <!-- Profile Settings Modal -->
+  <div id="profile-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="fixed inset-0 bg-stone-900/50 backdrop-blur-sm" onclick="app?.closeProfileModal()"></div>
+    <div class="relative bg-white rounded-lg shadow-2xl max-w-md w-full border border-stone-300 p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold text-stone-900">Pengaturan Profil</h3>
+        <button onclick="app?.closeProfileModal()" class="text-stone-400 hover:text-stone-700 text-xl">✕</button>
+      </div>
+
+      <!-- Profile Form -->
+      <form id="profile-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nama Lengkap</label>
+          <input type="text" id="profile-name" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm" placeholder="Nama lengkap" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">No. HP</label>
+          <input type="tel" id="profile-phone" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm" placeholder="08123456789" />
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Fakultas</label>
+            <select id="profile-faculty" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm">
+              <option value="FTI">FTI</option>
+              <option value="FEB">FEB</option>
+              <option value="FKIP">FKIP</option>
+              <option value="FH">FH</option>
+              <option value="FISIP">FISIP</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Semester</label>
+            <select id="profile-semester" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Kelas</label>
+            <select id="profile-kelas" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-[#163828] text-white rounded text-sm font-semibold hover:bg-[#23543D]">
+          Simpan Profil
+        </button>
+      </form>
+
+      <!-- Change Password Section -->
+      <div class="mt-6 pt-6 border-t border-stone-200">
+        <h4 class="text-sm font-bold text-stone-900 mb-3">Ganti Password</h4>
+        <form id="password-form" class="space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Password Lama</label>
+            <input type="password" id="old-password" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Password Baru</label>
+            <input type="password" id="new-password" required minlength="6" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Konfirmasi Password Baru</label>
+            <input type="password" id="confirm-password" required minlength="6" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded text-sm" />
+          </div>
+          <button type="submit" class="w-full py-2.5 bg-[#D94E34] text-white rounded text-sm font-semibold hover:bg-[#C94424]">
+            Ganti Password
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../app.js"></script>
+</body>
+</html>
