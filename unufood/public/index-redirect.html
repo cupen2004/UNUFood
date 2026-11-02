@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    window.ENV = {
+      SUPABASE_URL: 'https://qdgbjjtichoirqiqqngv.supabase.co',
+      SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2JqanRpY2hvaXJxaXFxbmd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM0MjY0NjgsImV4cCI6MjEwOTAwMjQ2OH0.4kbKBz--cvlCcRJQx_TfQltrtgFlJEVsbcm1ESDKqpI'
+    };
+  </script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #FAF7F2;
+    }
+    .loader {
+      text-align: center;
+    }
+    .spinner {
+      border: 3px solid #E7E5E4;
+      border-top: 3px solid #163828;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p {
+      color: #163828;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="loader">
+    <div class="spinner"></div>
+    <p>Memproses login...</p>
+  </div>
+
+  <script>
+    (async () => {
+      try {
+        const { createClient } = supabase;
+        const supabaseClient = createClient(window.ENV.SUPABASE_URL, window.ENV.SUPABASE_ANON_KEY);
+
+        // Handle OAuth callback
+        const { data, error } = await supabaseClient.auth.getSession();
+
+        if (error) {
+          console.error('Auth error:', error);
+          alert('Login gagal: ' + error.message);
+          window.location.href = '/public/';
+          return;
+        }
+
+        if (data.session) {
+          // Redirect to main app
+          window.location.href = '/public/';
+        } else {
+          // No session, redirect to login
+          window.location.href = '/public/';
+        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        window.location.href = '/public/';
+      }
+    })();
+  </script>
+</body>
+</html>
