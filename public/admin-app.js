@@ -1665,7 +1665,6 @@ class PartnerDashboardApp {
 
         if (status === 'SUBSCRIBED') {
           console.log('✓ Real-time order updates enabled');
-          this.showToast('✓ Auto-refresh aktif - Pesanan akan update otomatis');
 
           // Update UI indicator if exists
           const indicator = document.getElementById('realtime-indicator');
@@ -1674,7 +1673,6 @@ class PartnerDashboardApp {
           }
         } else if (status === 'CHANNEL_ERROR') {
           console.error('Real-time subscription error');
-          this.showToast('⚠️ Auto-refresh error - Gunakan tombol Refresh manual');
 
           const indicator = document.getElementById('realtime-indicator');
           if (indicator) {
