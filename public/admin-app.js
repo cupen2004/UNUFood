@@ -70,13 +70,13 @@ class PartnerDashboardApp {
 
     // Subscribe to state changes
     stateManager.subscribe((state) => {
-      console.log('State changed, re-rendering...');
+      console.log('State changed, checking if re-render needed...');
       console.log('- Menus:', state.menus?.length);
       console.log('- Orders:', state.allOrders?.length);
       console.log('- Active tab:', state.partnerSubTab);
 
-      // Always re-render on state change
-      // This ensures UI updates immediately for all changes (status, delete, etc)
+      // Only re-render if relevant data changed
+      // This prevents unnecessary re-renders from unrelated state updates
       this.render(state);
     });
 
@@ -887,7 +887,16 @@ class PartnerDashboardApp {
             createdAt: order.created_at
           }));
 
-          stateManager.setState({ allOrders: transformedOrders });
+          // Only update if data actually changed
+          const currentOrders = stateManager.getState().allOrders;
+          const ordersChanged = JSON.stringify(currentOrders) !== JSON.stringify(transformedOrders);
+
+          if (ordersChanged) {
+            console.log('Orders changed, updating state...');
+            stateManager.setState({ allOrders: transformedOrders });
+          } else {
+            console.log('No changes in orders, skipping update');
+          }
         }
 
         // Refresh menus silently
@@ -896,9 +905,9 @@ class PartnerDashboardApp {
       } catch (error) {
         console.error('Auto-refresh error:', error);
       }
-    }, 10000); // 10 seconds
+    }, 30000); // Increased to 30 seconds to reduce frequency
 
-    console.log('✓ Auto-refresh polling active (every 10s)');
+    console.log('✓ Auto-refresh polling active (every 30s)');
   }
 
   showToast(message) {

@@ -119,9 +119,21 @@ class StateManager {
     setInterval(() => {
       if (this.state.isSimulationOpen && this.state.simulatedSecondsLeft > 0) {
         this.state.simulatedSecondsLeft--;
-        this.notify();
+        // Update countdown display directly without triggering full re-render
+        this.updateCountdownDisplay();
       }
     }, 1000);
+  }
+
+  updateCountdownDisplay() {
+    // Update countdown elements directly without notifying subscribers
+    const countdownEl = document.getElementById('countdown-timer');
+    if (countdownEl) {
+      const hours = Math.floor(this.state.simulatedSecondsLeft / 3600);
+      const minutes = Math.floor((this.state.simulatedSecondsLeft % 3600) / 60);
+      const seconds = this.state.simulatedSecondsLeft % 60;
+      countdownEl.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
   }
 
   // Get current state
