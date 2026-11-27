@@ -48,17 +48,19 @@ python3 -m http.server 8000
 ```
 
 ### 4. Buka Aplikasi
-- **Customer App**: http://localhost:8000/public/index.html
-- **Partner Dashboard**: http://localhost:8000/public/admin.html
+- **Landing Page**: http://localhost:8000/public/index.html
+- **Customer App**: http://localhost:8000/public/customer-app.html
+- **Partner Dashboard**: http://localhost:8000/public/partner-dashboard.html
 
 ## 📁 Struktur Project
 
 ```
 unufood/
-├── public/                    # File HTML
-│   ├── index.html            # Customer app (mahasiswa)
-│   ├── admin.html            # Partner dashboard (UMKM)
-│   └── index-redirect.html   # OAuth callback handler
+├── public/                         # File HTML
+│   ├── index.html                 # Landing page (login)
+│   ├── customer-app.html          # Customer app (mahasiswa)
+│   ├── partner-dashboard.html     # Partner dashboard (UMKM)
+│   ├── oauth-callback.html        # OAuth callback handler
 ├── src/                      # Source code modular
 │   ├── auth/                 # Authentication
 │   │   ├── auth.js          # Auth manager
