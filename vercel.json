@@ -3,7 +3,11 @@
   "routes": [
     {
       "src": "/partner",
-      "dest": "/public/partner-dashboard.html"
+      "dest": "/public/admin.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "/public/admin.html"
     },
     {
       "src": "/(.*)",
