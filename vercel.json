@@ -4,8 +4,8 @@
   "outputDirectory": "public",
   "routes": [
     {
-      "src": "/admin",
-      "dest": "/admin.html"
+      "src": "/partner",
+      "dest": "/partner-dashboard.html"
     },
     {
       "src": "/(.*)",
