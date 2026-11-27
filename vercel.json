@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "echo 'No build required for static site'",
-  "outputDirectory": "public",
   "routes": [
     {
       "src": "/partner",
-      "dest": "/partner-dashboard.html"
+      "dest": "/public/partner-dashboard.html"
     },
     {
       "src": "/(.*)",
