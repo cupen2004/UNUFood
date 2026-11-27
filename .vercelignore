@@ -1,8 +1,0 @@
-node_modules
-.git
-.env
-.env.local
-*.md
-!README.md
-.gitignore
-.gitattributes
